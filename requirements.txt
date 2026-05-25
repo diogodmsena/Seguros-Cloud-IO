@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+langchain
+langchain-openai
+langchain-community
+chromadb
+pypdf
+pandas
+datasets
+fsspec
+huggingface-hub
+kagglehub

@@ -1,0 +1,73 @@
+# Ambientes Virtuais
+venv/
+env/
+.env
+.venv/
+env.bak/
+venv.bak/
+
+# Arquivos e Diretórios Específicos do Usuário (Conforme Solicitado)
+.agent/
+docs/
+
+# Python: Byte-compiled / arquivos otimizados / arquivos de cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C extensions
+*.so
+
+# Distribuição / Empacotamento
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Dados Locais e Bancos de Dados
+data/
+*.db
+*.sqlite3
+*.sqlite
+*.db-journal
+
+# Ferramentas de Testes e Cobertura
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.sved
+.pytest_cache/
+pytestdebug.log
+
+# Ferramentas e IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Ngrok e executáveis
+ngrok.exe
+ngrok
