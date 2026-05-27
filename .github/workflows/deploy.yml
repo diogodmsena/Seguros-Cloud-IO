@@ -21,10 +21,11 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           envs: OPENAI_API_KEY,OLLAMA_BASE_URL
           script: |
             # Caminho definido para o projeto
-            PROJECT_DIR="/root/projects/seguros-cloud-io"
+            PROJECT_DIR="/root/projects/Seguros-Cloud-IO"
             
             # Cria o diretório se não existir e entra nele
             mkdir -p $PROJECT_DIR
