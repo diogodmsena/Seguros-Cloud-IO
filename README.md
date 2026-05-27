@@ -25,6 +25,22 @@ Para que essa mágica aconteça, conectamos várias tecnologias modernas como se
 7. **SQLite (O Diário de Bordo):** É o nosso banco de dados fixo e super leve. Ele atua como a memória de longo prazo da nossa IA, lembrando de tudo o que você conversou nos últimos minutos e guardando os seus feedbacks.
 8. **Guardrails (O Segurança da Porta):** Um escudo inteligente que intercepta a mensagem *antes* dela chegar no cérebro. Se o cliente tentar pedir coisas proibidas (como "emita minha apólice agora" ou assuntos como "futebol" e "política"), o Segurança barra o acesso e devolve uma resposta padrão protetora, evitando riscos à seguradora.
 9. **HuggingFace / Datasets (A Biblioteca Externa):** Importamos grandes arquivos públicos com milhares de perguntas reais do mercado de seguros. Isso dá ao nosso Cérebro um vocabulário e contexto muito maiores do que apenas os nossos próprios PDFs, reduzindo as chances de a IA não saber responder.
+10. **Ngrok (O Túnel Seguro):** Uma ponte criptografada que permite que a API na nuvem (SaveinCloud) consulte o motor de IA pesado (Ollama Llama 3.2) rodando no seu computador local. Isso corta drasticamente os custos de GPU na nuvem durante a fase de estudos e desenvolvimento.
+
+---
+
+## 🛤️ Pipeline End-to-End (O Caminho da Mensagem)
+
+Veja o passo a passo exato do que acontece quando um cliente manda um *"Meu seguro auto cobre quebra de vidro?"*:
+
+1. **O Cliente:** Digita a mensagem no chat do site ou no WhatsApp.
+2. **Botpress:** Recebe o texto e dispara via HTTP POST para a nossa API hospedada na SaveinCloud (`/api/chat`).
+3. **Guardrails (Nuvem):** O Maestro analisa a mensagem instantaneamente. É um xingamento ou assunto proibido? Se sim, barra. Se não, deixa passar.
+4. **ChromaDB (Nuvem):** A API busca no banco de dados vetorial quais trechos de PDFs falam sobre "vidros". Ela encontra a "Cláusula 12" do Regulamento Geral.
+5. **Ngrok (A Viagem):** A nuvem empacota a Pergunta do Cliente + a Cláusula 12 e manda isso pelo túnel do Ngrok direto para o seu PC local.
+6. **Ollama (IA Local):** O modelo Llama 3.2 rodando na sua máquina lê a Cláusula 12 e escreve uma resposta natural, amigável e correta, baseada 100% no documento.
+7. **A Entrega:** A resposta gerada volta pelo túnel para a SaveinCloud, que devolve pro Botpress, que exibe na tela do cliente. Tudo em menos de 5 segundos!
+
 ---
 
 ## 🚀 Quick Start (Como Rodar o Projeto)
