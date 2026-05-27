@@ -1,6 +1,6 @@
 from typing import List
 from langchain_ollama import ChatOllama
-from langchain.schema import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from backend.core.config import settings
 
 
@@ -46,7 +46,7 @@ class LLMService:
             f"Contexto:\n{context_text}"
         )
 
-        from langchain.schema import AIMessage
+        from langchain_core.messages import AIMessage
         messages = [SystemMessage(content=system_prompt)]
         
         if history:

@@ -13,3 +13,4 @@ fsspec
 huggingface-hub
 kagglehub
 langchain-ollama
+langchain-core
