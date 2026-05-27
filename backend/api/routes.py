@@ -44,7 +44,7 @@ async def chat_endpoint(request: ChatRequest):
     chat_history = get_history(request.user_id, limit=4) # Pegar as últimas 4 mensagens de contexto
 
     # 1. Recuperar contexto usando RAG
-    context_chunks = rag_service.search_similar_documents(request.message, k=2)
+    context_chunks = rag_service.search_similar_documents(request.message, k=4)
 
     # 2. Gerar resposta com LLM + Contexto + Histórico
     reply = llm_service.generate_response(request.message, context_chunks, history=chat_history)
