@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatbot-seguros-api
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mapeia a pasta local /data do servidor para dentro do container
+      # Isso garante que o ChromaDB e o operational.db não sejam perdidos
+      - ./data:/app/data
+    env_file:
+      - .env

@@ -1,0 +1,58 @@
+name: Deploy to SaveinCloud
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production 
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to SaveinCloud via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: OPENAI_API_KEY,OLLAMA_BASE_URL
+          script: |
+            # Caminho definido para o projeto
+            PROJECT_DIR="/root/projects/seguros-cloud-io"
+            
+            # Cria o diretório se não existir e entra nele
+            mkdir -p $PROJECT_DIR
+            cd $PROJECT_DIR
+            
+            # Puxa o código mais recente
+            # Caso seja o primeiro deploy e o diretório esteja vazio, faz um clone primeiro
+            if [ -d ".git" ]; then
+              git reset --hard HEAD
+              git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main
+            else
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git .
+            fi
+            
+            # CRIA O .ENV DIRETAMENTE NO SERVIDOR
+            # Isso garante que a aplicação pegue as chaves da OpenAI sem expor no repositório
+            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env
+            
+            # Se o usuário configurar o Ollama para rodar fora do docker, injetamos também:
+            if [ -n "${{ secrets.OLLAMA_BASE_URL }}" ]; then
+              echo "OLLAMA_BASE_URL=${{ secrets.OLLAMA_BASE_URL }}" >> .env
+            fi
+            
+            # Garante que a pasta data exista para montagem de volumes
+            mkdir -p data
+            
+            # Tenta baixar a imagem base antes para evitar timeout
+            docker pull python:3.11-slim || true
+            
+            # Reconstrói os containers
+            docker-compose -f docker-compose.prod.yml up -d --build
