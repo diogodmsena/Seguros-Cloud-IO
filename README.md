@@ -96,4 +96,4 @@ A esteira de Deploy do GitHub Action vai jogar seus arquivos na nuvem (SaveinClo
 
 ## ⚖️ Licença
 
-Uso Privado - Seguros Cloud IO. Todos os direitos reservados.
+Este material foi publicado sob a licença [Atribuição 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt_BR).
