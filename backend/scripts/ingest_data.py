@@ -91,7 +91,7 @@ def ingest():
         shutil.rmtree(settings.CHROMA_DB_DIR)
         print(f"Diretório antigo do ChromaDB limpo em: {settings.CHROMA_DB_DIR}")
 
-    create_sample_data()
+    # create_sample_data() # Desativado para não sobrescrever dados reais do usuário
 
     documents = []
 

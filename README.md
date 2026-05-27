@@ -60,6 +60,24 @@ docker-compose -f docker-compose.prod.yml up -d --build
 
 ---
 
+## 🧠 Como Treinar o seu Robô (Adicionar Conhecimento)
+
+A nossa infraestrutura de nuvem é 100% autônoma. Para adicionar novos documentos ao cérebro do robô, você não precisa acessar servidores. Faça tudo localmente e deixe o GitHub Actions trabalhar:
+
+1. **Adicionar PDFs:** Coloque os arquivos `.pdf` ou `.txt` da sua seguradora dentro da pasta `backend/data/raw_pdfs/`.
+2. **Adicionar Perguntas Diretas:** Edite o arquivo `backend/data/faqs.csv` adicionando suas perguntas e respostas.
+3. **Enviar para a Nuvem:** No seu terminal ou VS Code, faça o commit e o push:
+   ```bash
+   git add .
+   git commit -m "adicionando nova apolice de vida"
+   git push
+   ```
+
+**O que acontece depois?** 
+A esteira de Deploy do GitHub Action vai jogar seus arquivos na nuvem (SaveinCloud) e vai acionar automaticamente o script de ingestão. O sistema deletará a memória antiga e reconstruirá todo o banco de dados vetorial do zero com os seus novos PDFs, deixando o robô imediatamente mais inteligente!
+
+---
+
 ## ⚖️ Licença
 
 Uso Privado - Seguros Cloud IO. Todos os direitos reservados.
