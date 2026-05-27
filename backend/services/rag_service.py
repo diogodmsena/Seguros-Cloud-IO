@@ -1,6 +1,6 @@
 from typing import List
 import os
-from langchain_community.embeddings import OllamaEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import Chroma
 from backend.core.config import settings
 

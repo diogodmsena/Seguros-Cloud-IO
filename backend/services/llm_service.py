@@ -1,5 +1,5 @@
 from typing import List
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain.schema import HumanMessage, SystemMessage
 from backend.core.config import settings
 

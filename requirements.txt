@@ -12,3 +12,4 @@ datasets
 fsspec
 huggingface-hub
 kagglehub
+langchain-ollama
