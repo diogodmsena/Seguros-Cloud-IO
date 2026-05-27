@@ -21,11 +21,10 @@ Para que essa mágica aconteça, conectamos várias tecnologias modernas como se
 3. **LangChain (O Intérprete):** É a ferramenta que conecta a pesquisa feita no ChromaDB com a Inteligência Artificial, entregando o conteúdo "mastigado".
 4. **Ollama / OpenAI (O Cérebro):** É a IA que lê a pergunta do cliente + os trechos e formula uma resposta educada e natural.
 5. **Botpress (A Vitrine):** É a interface visual (a tela do chat). Ele repassa a mensagem do cliente para o nosso Maestro.
-6. **Ngrok (O Túnel):** Cria um túnel secreto ligando o seu computador à internet aberta, para que o Botpress consiga se comunicar.
-7. **Docker (A Caixa de Mudança):** Empacota todo o nosso sistema para que funcione na nuvem definitiva (ex: SaveinCloud).
-8. **SQLite (O Diário de Bordo):** É o nosso banco de dados fixo e super leve. Ele atua como a memória de longo prazo da nossa IA, lembrando de tudo o que você conversou nos últimos minutos e guardando os seus feedbacks.
-9. **Guardrails (O Segurança da Porta):** Um escudo inteligente que intercepta a mensagem *antes* dela chegar no cérebro. Se o cliente tentar pedir coisas proibidas (como "emita minha apólice agora" ou assuntos como "futebol" e "política"), o Segurança barra o acesso e devolve uma resposta padrão protetora, evitando riscos à seguradora.
-10. **HuggingFace / Datasets (A Biblioteca Externa):** Importamos grandes arquivos públicos com milhares de perguntas reais do mercado de seguros. Isso dá ao nosso Cérebro um vocabulário e contexto muito maiores do que apenas os nossos próprios PDFs, reduzindo as chances de a IA não saber responder.
+6. **Docker (A Caixa de Mudança):** Empacota todo o nosso sistema para que funcione na nuvem definitiva (ex: SaveinCloud).
+7. **SQLite (O Diário de Bordo):** É o nosso banco de dados fixo e super leve. Ele atua como a memória de longo prazo da nossa IA, lembrando de tudo o que você conversou nos últimos minutos e guardando os seus feedbacks.
+8. **Guardrails (O Segurança da Porta):** Um escudo inteligente que intercepta a mensagem *antes* dela chegar no cérebro. Se o cliente tentar pedir coisas proibidas (como "emita minha apólice agora" ou assuntos como "futebol" e "política"), o Segurança barra o acesso e devolve uma resposta padrão protetora, evitando riscos à seguradora.
+9. **HuggingFace / Datasets (A Biblioteca Externa):** Importamos grandes arquivos públicos com milhares de perguntas reais do mercado de seguros. Isso dá ao nosso Cérebro um vocabulário e contexto muito maiores do que apenas os nossos próprios PDFs, reduzindo as chances de a IA não saber responder.
 ---
 
 ## 🚀 Quick Start (Como Rodar o Projeto)
@@ -45,12 +44,11 @@ python backend/main.py
 **3. Teste a Interface Local:**
 Abra o seu navegador de internet e acesse: `http://localhost:8000/`. Você verá uma interface de chat escura e elegante, já integrada com o sistema.
 
-**4. Abra para a Internet (Ngrok):**
-Em um novo terminal, rode o comando abaixo para gerar o link público:
+**4. Deploy em Produção (Docker Compose):**
+Para rodar oficialmente na nuvem pela porta web padrão (80):
 ```bash
-ngrok http 8000
+docker-compose -f docker-compose.prod.yml up -d --build
 ```
-*(Lembre-se de colocar esse link gerado lá nas configurações do seu Botpress!)*
 
 ---
 
