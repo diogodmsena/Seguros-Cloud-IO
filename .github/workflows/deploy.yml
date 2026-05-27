@@ -57,3 +57,12 @@ jobs:
             
             # Reconstrói os containers
             docker-compose -f docker-compose.prod.yml up -d --build
+            
+            # Aguarda 5 segundos para o servidor subir
+            sleep 5
+            
+            # Executa a ingestão dos dados básicos e PDFs
+            docker exec chatbot-seguros-api python backend/scripts/ingest_data.py
+            
+            # Executa a ingestão dos datasets do Kaggle/HuggingFace
+            docker exec chatbot-seguros-api python scripts/ingest_insurance_qa.py

@@ -38,7 +38,8 @@ share/python-wheels/
 *.egg
 
 # Dados Locais e Bancos de Dados
-data/
+data/*
+!data/docs/
 *.db
 *.sqlite3
 *.sqlite
