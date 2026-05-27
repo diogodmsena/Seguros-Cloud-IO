@@ -1,7 +1,6 @@
 import os
 import sys
 import pandas as pd
-import kagglehub
 
 # Adiciona o diretório raiz ao sys.path para importações funcionarem
 sys.path.append(
@@ -19,6 +18,7 @@ def ingest_dataset_1():
     """Ingere o dataset ojassrivastava18/insurance-qa do Kaggle usando kagglehub."""
     print("Carregando dataset ojassrivastava18/insurance-qa via kagglehub...")
     try:
+        import kagglehub
         path = kagglehub.dataset_download("ojassrivastava18/insurance-qa")
         csv_path = os.path.join(path, "question_answer.csv")
 
@@ -31,8 +31,8 @@ def ingest_dataset_1():
         documents = []
 
         for index, row in df.iterrows():
-            # Limita a 200 registros na V1 para evitar lentidão no Ollama local
-            if index >= 200:
+            # Limita a 30 registros para evitar sobrecarga no ngrok (rate limit)
+            if index >= 30:
                 break
 
             question = row.get("question") or ""
@@ -68,8 +68,8 @@ def ingest_dataset_2():
         print(f"Colunas disponíveis no v2: {df.columns.tolist()}")
 
         for index, row in df.iterrows():
-            # Limita a 200 registros para evitar sobrecarga no Ollama local
-            if index >= 200:
+            # Limita a 30 registros para evitar sobrecarga no ngrok (rate limit)
+            if index >= 30:
                 break
 
             q_text = row.get("input") or ""

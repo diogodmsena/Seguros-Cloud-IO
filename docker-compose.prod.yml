@@ -10,8 +10,8 @@ services:
     ports:
       - "80:8000"
     volumes:
-      # Mapeia a pasta local /data do servidor para dentro do container
-      # Isso garante que o ChromaDB e o operational.db não sejam perdidos
-      - ./data:/app/data
+      # Mapeia a pasta local backend/data do servidor para dentro do container
+      # Isso garante que o ChromaDB e os arquivos (faqs.csv) não sejam perdidos
+      - ./backend/data:/app/backend/data
     env_file:
       - .env
