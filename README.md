@@ -92,6 +92,27 @@ A nossa infraestrutura de nuvem é 100% autônoma. Para adicionar novos document
 **O que acontece depois?** 
 A esteira de Deploy do GitHub Action vai jogar seus arquivos na nuvem (SaveinCloud) e vai acionar automaticamente o script de ingestão. O sistema deletará a memória antiga e reconstruirá todo o banco de dados vetorial do zero com os seus novos PDFs, deixando o robô imediatamente mais inteligente!
 
+### Executando a Ingestão Manualmente (Servidor de Produção)
+
+Caso precise forçar a ingestão dos dados manualmente diretamente no servidor, você pode executar os scripts de dentro do container Docker:
+
+**1. Ingerir Dados Locais (faqs.csv e PDFs):**
+*(Isso limpa o banco de dados atual e recria com os arquivos locais)*
+```bash
+docker exec -it chatbot-seguros-api python backend/scripts/ingest_data.py
+```
+
+**2. Ingerir Datasets Externos (Kaggle e HuggingFace):**
+*(Isso adiciona perguntas genéricas de seguros em inglês ao banco de dados existente)*
+```bash
+docker exec -it chatbot-seguros-api python backend/scripts/ingest_insurance_qa.py
+```
+
+**Importante:** Após rodar o `ingest_data.py`, lembre-se de reiniciar o container da API para que ele descarte o cache antigo e carregue o novo banco de dados do disco:
+```bash
+docker-compose -f docker-compose.prod.yml restart backend
+```
+
 ---
 
 ## ⚖️ Licença
