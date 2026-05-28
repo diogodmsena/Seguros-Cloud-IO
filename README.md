@@ -6,7 +6,7 @@
 
 ## 📖 O Que é Este Projeto?
 
-Imagine que você tem milhares de páginas de PDFs sobre regras de seguros. Quando um cliente pergunta: *"O meu seguro cobre quebra de vidro?"*, encontrar essa resposta manualmente é lento. 
+Imagine que você tem milhares de páginas de PDFs sobre regras de seguros. Quando um cliente pergunta: *"O meu seguro cobre quebra de vidro?"*, encontrar essa resposta manualmente é lento.
 
 Este projeto constrói um **Cérebro Digital** que lê a sua pergunta, vasculha instantaneamente todos os documentos de seguros armazenados, encontra a regra exata e escreve uma resposta natural para o cliente, sem inventar informações. Isso é feito usando uma técnica avançada chamada **RAG (Geração Aumentada por Recuperação)**.
 
@@ -48,11 +48,13 @@ Veja o passo a passo exato do que acontece quando um cliente manda um *"Meu segu
 Se você for um desenvolvedor e quiser ligar este robô no seu computador, o processo é super simples:
 
 **1. Instale as dependências:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **2. Inicie o Servidor (Maestro):**
+
 ```bash
 python backend/main.py
 ```
@@ -62,6 +64,7 @@ Abra o seu navegador de internet e acesse: `http://localhost:8000/`. Você verá
 
 **4. Deploy em Produção (Docker Compose):**
 Para rodar oficialmente na nuvem pela porta web padrão (80):
+
 ```bash
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
@@ -83,13 +86,14 @@ A nossa infraestrutura de nuvem é 100% autônoma. Para adicionar novos document
 1. **Adicionar PDFs:** Coloque os arquivos `.pdf` ou `.txt` da sua seguradora dentro da pasta `backend/data/raw_pdfs/`.
 2. **Adicionar Perguntas Diretas:** Edite o arquivo `backend/data/faqs.csv` adicionando suas perguntas e respostas.
 3. **Enviar para a Nuvem:** No seu terminal ou VS Code, faça o commit e o push:
+
    ```bash
    git add .
    git commit -m "adicionando nova apolice de vida"
    git push
    ```
 
-**O que acontece depois?** 
+**O que acontece depois?**
 A esteira de Deploy do GitHub Action vai jogar seus arquivos na nuvem (SaveinCloud) e vai acionar automaticamente o script de ingestão. O sistema deletará a memória antiga e reconstruirá todo o banco de dados vetorial do zero com os seus novos PDFs, deixando o robô imediatamente mais inteligente!
 
 ### Executando a Ingestão Manualmente (Servidor de Produção)
@@ -98,17 +102,20 @@ Caso precise forçar a ingestão dos dados manualmente diretamente no servidor, 
 
 **1. Ingerir Dados Locais (faqs.csv e PDFs):**
 *(Isso limpa o banco de dados atual e recria com os arquivos locais)*
+
 ```bash
 docker exec -it chatbot-seguros-api python backend/scripts/ingest_data.py
 ```
 
 **2. Ingerir Datasets Externos (Kaggle e HuggingFace):**
 *(Isso adiciona perguntas genéricas de seguros em inglês ao banco de dados existente)*
+
 ```bash
 docker exec -it chatbot-seguros-api python backend/scripts/ingest_insurance_qa.py
 ```
 
 **Importante:** Após rodar o `ingest_data.py`, lembre-se de reiniciar o container da API para que ele descarte o cache antigo e carregue o novo banco de dados do disco:
+
 ```bash
 docker-compose -f docker-compose.prod.yml restart backend
 ```
