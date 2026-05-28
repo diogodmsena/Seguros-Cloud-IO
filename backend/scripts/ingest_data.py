@@ -130,10 +130,17 @@ def ingest():
         print("Nenhum documento encontrado para indexação.")
         return
 
-    # Split dos documentos em chunks menores
+    # Separar documentos que precisam de split (PDFs) dos que já são atômicos (FAQs)
+    docs_to_split = [doc for doc in documents if doc.metadata.get("source") != "faq"]
+    faq_docs = [doc for doc in documents if doc.metadata.get("source") == "faq"]
+
+    # Split dos documentos em chunks menores (Apenas PDFs/Textos longos)
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
-    split_docs = text_splitter.split_documents(documents)
-    print(f"Documentos divididos em {len(split_docs)} chunks.")
+    split_docs = text_splitter.split_documents(docs_to_split)
+    
+    # Junta os chunks divididos com os FAQs intactos
+    final_docs = split_docs + faq_docs
+    print(f"Documentos preparados: {len(split_docs)} chunks de PDFs/Textos + {len(faq_docs)} FAQs intactas.")
 
     embeddings = OllamaEmbeddings(
         base_url=settings.OLLAMA_BASE_URL, model=settings.OLLAMA_EMBED_MODEL
@@ -143,7 +150,7 @@ def ingest():
         f"Criando embeddings usando Ollama ({settings.OLLAMA_EMBED_MODEL}) e persistindo no ChromaDB em: {settings.CHROMA_DB_DIR}"
     )
     Chroma.from_documents(
-        documents=split_docs,
+        documents=final_docs,
         embedding=embeddings,
         persist_directory=settings.CHROMA_DB_DIR,
     )
