@@ -40,10 +40,12 @@ share/python-wheels/
 # Dados Locais e Bancos de Dados
 data/*
 !data/docs/
+backend/data/chroma/
 *.db
 *.sqlite3
 *.sqlite
 *.db-journal
+
 
 # Ferramentas de Testes e Cobertura
 .tox/
