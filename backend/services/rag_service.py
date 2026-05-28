@@ -37,7 +37,14 @@ class RAGService:
             return []
         try:
             results = store.similarity_search(query, k=k)
-            return [doc.page_content for doc in results]
+            final_chunks = []
+            for doc in results:
+                if doc.metadata.get("source") == "faq" and "resposta" in doc.metadata:
+                    # Remonta o bloco: Pergunta (page_content) + Resposta (metadata)
+                    final_chunks.append(f"{doc.page_content}\nResposta: {doc.metadata['resposta']}")
+                else:
+                    final_chunks.append(doc.page_content)
+            return final_chunks
         except Exception as e:
             print(f"Erro ao buscar no ChromaDB: {e}")
             return []

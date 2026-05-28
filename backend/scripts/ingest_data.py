@@ -100,10 +100,13 @@ def ingest():
         print(f"Carregando FAQs do arquivo: {settings.FAQS_FILE_PATH}")
         df = pd.read_csv(settings.FAQS_FILE_PATH, encoding="utf-8")
         for index, row in df.iterrows():
-            content = f"Pergunta: {row['Pergunta']}\nResposta: {row['Resposta']}\nCategoria: {row['Categoria']}"
             doc = Document(
-                page_content=content,
-                metadata={"source": "faq", "category": row["Categoria"]},
+                page_content=f"Pergunta: {row['Pergunta']}",
+                metadata={
+                    "source": "faq", 
+                    "category": row["Categoria"],
+                    "resposta": row["Resposta"]
+                },
             )
             documents.append(doc)
 
